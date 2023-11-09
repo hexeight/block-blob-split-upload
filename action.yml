@@ -3,11 +3,11 @@ description: 'Upload files as a block blob to Azure Storage Account. Split the b
 inputs:
   separator:
     description: 'String that will be used as a separator on the text file.'
-    required: true
+    required: false
     default: '<comments/>'
   fileFilter:
     description: 'Comma separated file extensions that should be split before uploading'
-    required: true
+    required: false
     default: 'htm,html'
 outputs:
 runs:
