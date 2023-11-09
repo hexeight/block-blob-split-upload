@@ -9,7 +9,6 @@ inputs:
     description: 'Comma separated file extensions that should be split before uploading'
     required: false
     default: 'htm,html'
-outputs:
 runs:
   using: 'node20'
   main: 'dist/index.js'
