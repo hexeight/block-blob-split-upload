@@ -78337,7 +78337,7 @@ try {
           }
           let blockId = buff.toString('base64');
           console.log("Setting block id", blockId);
-          blockResp = await blockBlobClient.stageBlock(blockId, splitContent[c]);
+          blockResp = await blockBlobClient.stageBlock(blockId, splitContent[c], splitContent[c].length);
           console.log("Block response");
           console.log(blockResp);
         }); 
