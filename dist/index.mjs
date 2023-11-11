@@ -78258,7 +78258,9 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(9935);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(2835);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(7147);
-/* harmony import */ var _azure_storage_blob__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(4550);
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(6113);
+/* harmony import */ var _azure_storage_blob__WEBPACK_IMPORTED_MODULE_4__ = __nccwpck_require__(4550);
+
 
 
 
@@ -78297,8 +78299,8 @@ try {
   const accountKey = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('storageAccountKey');
   const containerName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('containerName');
 
-  const sharedKeyCredential = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_3__/* .StorageSharedKeyCredential */ .sE(account, accountKey);
-  const blobServiceClient = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_3__/* .BlobServiceClient */ .N1(
+  const sharedKeyCredential = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_4__/* .StorageSharedKeyCredential */ .sE(account, accountKey);
+  const blobServiceClient = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_4__/* .BlobServiceClient */ .N1(
     `https://${account}.blob.core.windows.net`,
     sharedKeyCredential
   );
@@ -78327,11 +78329,21 @@ try {
       const blockBlobClient = containerClient.getBlockBlobClient(filePath);
 
       // Stage blocks
-      //splitContent.forEach(c => {
-      //  let blockId = 
-      //  blockBlobClient.stageBlock(blockId, body);
-      //});
-      //containerClient.stageBlock();
+      for (var c = 0; c < splitContent.length; c++) {
+        crypto__WEBPACK_IMPORTED_MODULE_3__.randomBytes(64, async (err, buff) => {
+          if (err) {
+            console.error("Error while generating blockId", err);
+            return;
+          }
+          let blockId = buff.toString('base64');
+          console.log("Setting block id", blockId);
+          blockResp = await blockBlobClient.stageBlock(blockId, splitContent[c]);
+          console.log("Block response");
+          console.log(blockResp);
+        });
+        
+      }
+      containerClient.stageBlock();
 
       // Commit blocks into block blob
     }

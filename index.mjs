@@ -1,6 +1,7 @@
 import core from '@actions/core'
 import github from '@actions/github'
 import fs from 'fs'
+import crypto from 'crypto'
 
 import { BlobServiceClient, StorageSharedKeyCredential } from "@azure/storage-blob";
 
@@ -66,11 +67,21 @@ try {
       const blockBlobClient = containerClient.getBlockBlobClient(filePath);
 
       // Stage blocks
-      //splitContent.forEach(c => {
-      //  let blockId = 
-      //  blockBlobClient.stageBlock(blockId, body);
-      //});
-      //containerClient.stageBlock();
+      for (var c = 0; c < splitContent.length; c++) {
+        crypto.randomBytes(64, async (err, buff) => {
+          if (err) {
+            console.error("Error while generating blockId", err);
+            return;
+          }
+          let blockId = buff.toString('base64');
+          console.log("Setting block id", blockId);
+          blockResp = await blockBlobClient.stageBlock(blockId, splitContent[c]);
+          console.log("Block response");
+          console.log(blockResp);
+        });
+        
+      }
+      containerClient.stageBlock();
 
       // Commit blocks into block blob
     }
