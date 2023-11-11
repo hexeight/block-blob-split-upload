@@ -14,6 +14,8 @@ try {
   let list = fs.readdirSync(path, {
     withFileTypes: true,
     recursive: true
+  }).filter(function (file) {
+    return fs.statSync(file.path+'/'+file.name).isFile();
   });
 
   console.log("Scanning folder...");
