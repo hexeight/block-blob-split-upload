@@ -79,14 +79,8 @@ try {
       // Upload block blob
       console.log(`Uploading ${filePath} without splitting...`);
       const blockBlobClient = containerClient.getBlockBlobClient(filePath);
-      blockBlobClient.uploadFile(filePath).then(function (res){
-        console.log("File upload result for ", filePath);
-        console.log(res);
-      })
-      .catch(function (err) {
-        console.error("Error uploading", filePath);
-        console.error(err);
-      });
+      await blockBlobClient.uploadFile(filePath);
+      console.log(`Upload complete for ${filePath}`);
     }
   }
 
