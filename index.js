@@ -14,6 +14,7 @@ try {
   let list = fs.readdirSync(path).filter(function (file) {
     return fs.statSync(path+'/'+file).isDirectory();
   });
+  console.log("Scanning folder...");
   console.log(list);
 
   // Get the JSON webhook payload for the event that triggered the workflow
