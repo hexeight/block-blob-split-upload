@@ -78570,6 +78570,9 @@ try {
   );
   const containerClient = blobServiceClient.getContainerClient(containerName);
   console.log("Connected to Azure Storage Account");
+  const createContainerResponse = containerClient.createIfNotExists().then(function(res) {
+    console.log(`Created container ${containerName} successfully`, res);
+  });
 
   // Upload each file to blob storage
   console.log("Starting upload");
@@ -78587,9 +78590,18 @@ try {
       let splitContent = content.split(separator);
       console.log("Split into ", splitContent.length, "blocks.")
     }
+    else
+    {
+      // Upload block blob
+      console.log(`Uploading ${filePath} without splitting...`);
+      const blockBlobClient = containerClient.getBlockBlobClient(filePath);
+      blockBlobClient.uploadFile(filePath).then(function (res){
+        console.log("File upload result");
+        console.log(res);
+      });
+    }
 
-    // Upload block blob
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    
   }
 
   // Get the JSON webhook payload for the event that triggered the workflow
