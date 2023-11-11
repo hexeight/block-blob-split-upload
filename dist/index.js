@@ -30160,6 +30160,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(9935);
 const github = __nccwpck_require__(2835);
+const fs = __nccwpck_require__(7147);
 
 try {
   
@@ -30169,6 +30170,13 @@ try {
   const fileFilter = core.getInput('fileFilter');
   console.log(`Filtering files for splitting based on (${fileFilter})!`);
   
+  let path = "./";
+  let list = fs.readdirSync(path).filter(function (file) {
+    return fs.statSync(path+'/'+file).isDirectory();
+  });
+  console.log("Scanning folder...");
+  console.log(list);
+
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
