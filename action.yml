@@ -1,6 +1,16 @@
 name: 'Block Blob Split Upload'
 description: 'Upload files as a block blob to Azure Storage Account. Split the blob in blocks based on a predefined separator'
 inputs:
+  storageAccountName:
+    description: 'Name of the Azure Storage Account where the blobs will be uploaded.'
+    required: false
+  containerName:
+    description: 'Name of the Container where the blob will be uploaded. If the container is not present, a new container will be created.'
+    required: false
+    default: '$web'
+  storageAccountKey:
+    description: 'Comma separated file extensions that should be split before uploading'
+    required: false
   separator:
     description: 'String that will be used as a separator on the text file.'
     required: false
