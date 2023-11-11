@@ -30171,11 +30171,15 @@ try {
   console.log(`Filtering files for splitting based on (${fileFilter})!`);
   
   let path = "./";
-  let list = fs.readdirSync(path).filter(function (file) {
-    return fs.statSync(path+'/'+file).isDirectory();
+  let list = fs.readdirSync(path, {
+    withFileTypes: true,
+    recursive: true
   });
+
   console.log("Scanning folder...");
-  console.log(list);
+  for (var i = 0; i < list.length; i++){
+    console.log(list[i]);
+  }
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
