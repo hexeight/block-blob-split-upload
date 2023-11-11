@@ -2,6 +2,8 @@ import core from '@actions/core'
 import github from '@actions/github'
 import fs from 'fs'
 
+import { BlobServiceClient, StorageSharedKeyCredential } from "@azure/storage-blob";
+
 try {
   
   const separator = core.getInput('separator');
@@ -28,7 +30,6 @@ try {
 
   // Initialize Azure Blob Connection
   console.log("Connecting to Azure Storage Account...");
-  const { BlobServiceClient, StorageSharedKeyCredential } = require("@azure/storage-blob");
 
   // Enter your storage account name and shared key
   const account = core.getInput('storageAccountName');
