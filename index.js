@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fs = require('fs');
 
 try {
   
@@ -9,6 +10,11 @@ try {
   const fileFilter = core.getInput('fileFilter');
   console.log(`Filtering files for splitting based on (${fileFilter})!`);
   
+  let path = "./";
+  var list = fs.readdirSync(path).filter(function (file) {
+    return fs.statSync(path+'/'+file).isDirectory();
+  });
+
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
