@@ -78555,6 +78555,7 @@ try {
   }
 
   // Initialize Azure Blob Connection
+  console.log("Connecting to Azure Storage Account...");
   const { BlobServiceClient, StorageSharedKeyCredential } = __nccwpck_require__(4550);
 
   // Enter your storage account name and shared key
@@ -78568,6 +78569,7 @@ try {
     sharedKeyCredential
   );
   const containerClient = blobServiceClient.getContainerClient(containerName);
+  console.log("Connected to Azure Storage Account");
 
   // Upload each file to blob storage
   console.log("Starting upload");
