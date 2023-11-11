@@ -78,10 +78,8 @@ try {
           blockResp = await blockBlobClient.stageBlock(blockId, splitContent[c]);
           console.log("Block response");
           console.log(blockResp);
-        });
-        
+        }); 
       }
-      containerClient.stageBlock();
 
       // Commit blocks into block blob
     }
