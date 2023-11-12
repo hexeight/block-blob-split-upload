@@ -93,6 +93,9 @@ try {
       // Commit blocks into block blob
       console.log("Blocks", blockIds);
       let blockResp = await blockBlobClient.commitBlockList(blockIds, {
+        metadata: {
+          blockBlobSeparator: separator
+        },
         blobHTTPHeaders: {
           blobContentType: mimeType
         }
