@@ -69,9 +69,9 @@ try {
       // Stage blocks
       for (var c = 0; c < splitContent.length; c++) {
         console.log("Content preview", splitContent[c].length);
+        let content = splitContent[c];
         crypto.randomBytes(64, async (err, buff) => {
-          let content = splitContent[c];
-          console.log("Content preview - callback", c);
+          console.log("Content preview - callback", content.length);
           if (err) {
             console.error("Error while generating blockId", err);
             return;
