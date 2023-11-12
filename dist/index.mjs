@@ -78325,6 +78325,8 @@ try {
     let ext = list[i].name.toLocaleLowerCase().split('.');
     ext = ext[ext.length - 1];
     let mimeType = mime_types__WEBPACK_IMPORTED_MODULE_4__.lookup(ext);
+    if (!mimeType)
+      mimeType = "application/octet-stream";
     console.log("File mime-type identified to", mimeType);
     if(splitExtensions.includes(ext))
     {
@@ -78353,7 +78355,11 @@ try {
 
       // Commit blocks into block blob
       console.log("Blocks", blockIds);
-      let blockResp = await blockBlobClient.commitBlockList(blockIds);
+      let blockResp = await blockBlobClient.commitBlockList(blockIds, {
+        blobHTTPHeaders: {
+          blobContentType: mimeType
+        }
+      });
       console.log(blockResp);
     }
     else
@@ -78361,7 +78367,11 @@ try {
       // Upload block blob
       console.log(`Uploading ${filePath} without splitting...`);
       const blockBlobClient = containerClient.getBlockBlobClient(filePath);
-      await blockBlobClient.uploadFile(filePath);
+      await blockBlobClient.uploadFile(filePath, {
+        blobHTTPHeaders: {
+          blobContentType: mimeType
+        }
+      });
       console.log(`Upload complete for ${filePath}`);
     }
   }
