@@ -74,16 +74,17 @@ try {
         let buff = crypto.randomBytes(64);
         let blockId = buff.toString('base64');
         console.log("Setting block id", blockId);
-        let blockResp = await blockBlobClient.stageBlock(blockId, content, content.length);
+        let blockIdResp = await blockBlobClient.stageBlock(blockId, content, content.length);
         console.log("Block response");
-        console.log(blockResp);
+        console.log(blockIdResp);
 
         // add blockId to array for block commit
-        blockIds.push(blockResp.requestId);
+        blockIds.push(blockId);
       }
 
       // Commit blocks into block blob
       console.log("Blocks", blockIds);
+      blockResp = await blockBlobClient.commitBlockList(blockIds);
     }
     else
     {
