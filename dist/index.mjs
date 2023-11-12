@@ -78329,24 +78329,23 @@ try {
       const blockBlobClient = containerClient.getBlockBlobClient(filePath);
 
       // Stage blocks
+      let blockIds = [];
       for (var c = 0; c < splitContent.length; c++) {
         let content = splitContent[c];
-        crypto__WEBPACK_IMPORTED_MODULE_3__.randomBytes(64, async (err, buff) => {
-          console.log("Content length", content.length);
-          if (err) {
-            console.error("Error while generating blockId", err);
-            return;
-          }
-          let blockId = buff.toString('base64');
-          console.log("Setting block id", blockId);
-          
-          let blockResp = await blockBlobClient.stageBlock(blockId, content, content.length);
-          console.log("Block response");
-          console.log(blockResp);
-        }); 
+        console.log("Content length", content.length);
+        let buff = crypto__WEBPACK_IMPORTED_MODULE_3__.randomBytes(64);
+        let blockId = buff.toString('base64');
+        console.log("Setting block id", blockId);
+        let blockResp = await blockBlobClient.stageBlock(blockId, content, content.length);
+        console.log("Block response");
+        console.log(blockResp);
+
+        // add blockId to array for block commit
+        blockIds.push(blockResp.requestId);
       }
 
       // Commit blocks into block blob
+      console.log("Blocks", blockIds);
     }
     else
     {
