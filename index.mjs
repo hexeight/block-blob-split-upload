@@ -84,7 +84,8 @@ try {
 
       // Commit blocks into block blob
       console.log("Blocks", blockIds);
-      blockResp = await blockBlobClient.commitBlockList(blockIds);
+      let blockResp = await blockBlobClient.commitBlockList(blockIds);
+      console.log(blockResp);
     }
     else
     {
