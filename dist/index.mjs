@@ -78314,7 +78314,7 @@ try {
   console.log("Starting upload");
   for (var i = 0; i < list.length; i++){
     let filePath = list[i].path;
-    if (filePath[filePath.length - 1] == '/')
+    if (filePath[filePath.length - 1] != '/')
       filePath += '/';
     filePath += list[i].name;
     console.log("Uploading", filePath);
