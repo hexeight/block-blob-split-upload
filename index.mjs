@@ -51,7 +51,10 @@ try {
   // Upload each file to blob storage
   console.log("Starting upload");
   for (var i = 0; i < list.length; i++){
-    let filePath = list[i].path+'/'+list[i].name;
+    let filePath = list[i].path;
+    if (filePath[filePath.length - 1] == '/')
+      filePath += '/';
+    filePath += list[i].name;
     console.log("Uploading", filePath);
     
     // Check if extenstion matches filter criteria for blob split
