@@ -71,7 +71,7 @@ try {
         console.log("Content preview", splitContent[c].length);
         crypto.randomBytes(64, async (err, buff) => {
           let content = splitContent[c];
-          console.log("Content preview - callback", content);
+          console.log("Content preview - callback", c);
           if (err) {
             console.error("Error while generating blockId", err);
             return;
