@@ -78332,6 +78332,7 @@ try {
       for (var c = 0; c < splitContent.length; c++) {
         console.log("Content preview", splitContent[c].length);
         crypto__WEBPACK_IMPORTED_MODULE_3__.randomBytes(64, async (err, buff) => {
+          let content = splitContent[c];
           if (err) {
             console.error("Error while generating blockId", err);
             return;
@@ -78339,7 +78340,7 @@ try {
           let blockId = buff.toString('base64');
           console.log("Setting block id", blockId);
           
-          blockResp = await blockBlobClient.stageBlock(blockId, splitContent[c], splitContent[c].length);
+          blockResp = await blockBlobClient.stageBlock(blockId, content, content.length);
           console.log("Block response");
           console.log(blockResp);
         }); 
