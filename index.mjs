@@ -2,6 +2,7 @@ import core from '@actions/core'
 import github from '@actions/github'
 import fs from 'fs'
 import crypto from 'crypto'
+import mime from 'mime-types'
 
 import { BlobServiceClient, StorageSharedKeyCredential } from "@azure/storage-blob";
 
@@ -60,6 +61,8 @@ try {
     // Check if extenstion matches filter criteria for blob split
     let ext = list[i].name.toLocaleLowerCase().split('.');
     ext = ext[ext.length - 1];
+    let mimeType = mime.lookup(ext);
+    console.log("File mime-type identified to", mimeType);
     if(splitExtensions.includes(ext))
     {
       console.log("Splitting ", filePath, "into blocks before uploading.");

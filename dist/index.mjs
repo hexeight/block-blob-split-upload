@@ -78259,7 +78259,9 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(2835);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(7147);
 /* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(6113);
-/* harmony import */ var _azure_storage_blob__WEBPACK_IMPORTED_MODULE_4__ = __nccwpck_require__(4550);
+/* harmony import */ var mime_types__WEBPACK_IMPORTED_MODULE_4__ = __nccwpck_require__(2277);
+/* harmony import */ var _azure_storage_blob__WEBPACK_IMPORTED_MODULE_5__ = __nccwpck_require__(4550);
+
 
 
 
@@ -78299,8 +78301,8 @@ try {
   const accountKey = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('storageAccountKey');
   const containerName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('containerName');
 
-  const sharedKeyCredential = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_4__/* .StorageSharedKeyCredential */ .sE(account, accountKey);
-  const blobServiceClient = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_4__/* .BlobServiceClient */ .N1(
+  const sharedKeyCredential = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_5__/* .StorageSharedKeyCredential */ .sE(account, accountKey);
+  const blobServiceClient = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_5__/* .BlobServiceClient */ .N1(
     `https://${account}.blob.core.windows.net`,
     sharedKeyCredential
   );
@@ -78322,6 +78324,8 @@ try {
     // Check if extenstion matches filter criteria for blob split
     let ext = list[i].name.toLocaleLowerCase().split('.');
     ext = ext[ext.length - 1];
+    let mimeType = mime_types__WEBPACK_IMPORTED_MODULE_4__.lookup(ext);
+    console.log("File mime-type identified to", mimeType);
     if(splitExtensions.includes(ext))
     {
       console.log("Splitting ", filePath, "into blocks before uploading.");
